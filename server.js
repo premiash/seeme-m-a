@@ -15,7 +15,7 @@ server = require("http").createServer(app);
 io = require("socket.io").listen(server);
 users = {};
 
-server.listen(3000);  
+server.listen(3000);  //@Team to discuss with TA reg usage of port conflicts between http and PORT config
 
 io.sockets.on('connection', function(socket) {
   socket.on('new user',function(data, callback){
@@ -47,7 +47,7 @@ io.sockets.on('connection', function(socket) {
 //CHAT module - addition
 
 //CHAT module changes
-var PORT = process.env.PORT ||  4000; //@Ashmy to Review the PORT 4000 change, with Michael
+var PORT = process.env.PORT ||  4000; //@Team to Review the PORT 4000 change, with Michael
 //CHAT module changes
 var mainRoutes = require('./routes/mainRoutes.js');
 
