@@ -1,0 +1,124 @@
+<div class="container top-container">
+    <hr>
+    <div class="row">
+        <!-- left column -->
+        <div class="col-xs-4">
+            <div class="text-center">
+                <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">
+                <h6>Upload a video {{firstname}} </h6>
+
+                <input type="file" class="form-control">
+                <br>
+
+
+                <a href="#" id="start-camera" class="visible">Touch Here To Analyze Your Mood</a>
+                <video id="camera-stream"></video>
+                <img id="snap" alt="emotional selfie">
+                <p id="error-message"></p>
+                <div class="controls">
+                    <a href="#" id="delete-photo" title="Retake video" class="disabled"><i class="material-icons">delete</i></a>
+                    <a href="#" id="start-recording" title="record video snippet">
+                        <i id="start" class="material-icons">camera_alt</i>
+                        <i id="stop" class="material-icons">camera_alt</i>
+                    </a>
+                    <a href="#" id="download-photo" title="Analyze Mood" class="disabled"><i class="material-icons">done</i></a>
+                </div>
+                <canvas></canvas>
+                <!-- Hidden canvas element. Used for taking snapshot of video. -->
+
+            </div>
+        </div>
+
+
+
+        <!-- edit form column -->
+        <div class="col-xs-8 personal-info">
+            <div class="alert alert-info alert-dismissable">
+                <a class="panel-close close" data-dismiss="alert">×</a>
+                <i class="fa fa-coffee"></i> This is where you edit/update your profile.
+            </div>
+            <h3>Profile Info</h3>
+
+            <form class="form-horizontal" action="/updateprofile?_method=PUT" method="POST">
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Display Name:</label>
+                    <div class="col-xs-6">
+                        <input name="firstname" class="form-control" type="text" value="{{firstname}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Email:</label>
+                    <div class="col-xs-6">
+                        <input name="email" class="form-control" type="text" value="{{email}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Age:</label>
+                    <div class="col-xs-6">
+                        <input name="age" class="form-control" type="text" value="{{age}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Location:</label>
+                    <div class="col-xs-6">
+                        <input name="location" class="form-control" type="text" value="{{location}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">I am a:</label>
+                    <div class="col-xs-6">
+                        <select name="is_male" class="form-control" id="sel1">
+                             <option {{#if is_male}}selected{{/if}}>Guy</option>
+                            <option {{#unless is_male}}selected{{/unless}}>Girl</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Seeking a:</label>
+                    <div class="col-xs-6">
+                        <select name="seeking_male" class="form-control" id="sel1">
+                            <option {{#if seeking_male}}selected{{/if}}>Guy</option>
+                            <option {{#unless seeking_male}}selected{{/unless}}>Girl</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Between ages:</label>
+                    <div class="col-xs-6">
+                        <p>
+
+                            <div style="display:none;">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input name="age_pref_min" type="number" id="age-min" style="font-weight:bold;" {{#if age_pref_min}}value="{{age_pref_min}}"
+                                            {{/if}}>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input name="age_pref_max" type="number" id="age-max" style="font-weight:bold;" {{#if age_pref_max}}value="{{age_pref_max}}"
+                                            {{/if}}>
+                                    </div>
+                                </div>
+                            </div>
+                        </p>
+                        <div id="slider"></div>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-3 control-label"></label>
+                    <div class="col-xs-8">
+                        <input type="submit" class="btn btn-primary" value="Save Changes">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="lib/wnumb/wnumb.js"></script>
+<script src="lib/noui/nouislider.min.js"></script>
+<script src="assets/js/takephoto.js"></script>
