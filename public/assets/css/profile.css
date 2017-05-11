@@ -165,3 +165,12 @@
    .noUi-connect {
        background: #009fdc;
    }
+   
+   .margin-top-bott {
+       margin-top: 30px;
+       margin-bottom: 30px;
+   }
+   
+   .category-icon {
+       font-size: 60px;
+   }
