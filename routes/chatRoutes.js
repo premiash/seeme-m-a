@@ -1,7 +1,8 @@
-var chatController = require('../controllers/chatcontroller.js');
+var LocalStrategy = require('passport-local').Strategy;
+var chatController = require('../helpers/chathelper.js');
 
 module.exports = function(app, io) {
     app.get('/chat', chatController.chatindex);
 
-    //app.post('/chat/login', chatController.login);
+    app.post('/chat/login', chatController.login);
 }

@@ -15,39 +15,39 @@ server = require("http").createServer(app);
 io = require("socket.io").listen(server);
 users = {};
 
-server.listen(3000);  //@Team to discuss with TA reg usage of port conflicts between http and PORT config
+server.listen(3000); //@Team to discuss with TA reg usage of port conflicts between http and PORT config
 
 io.sockets.on('connection', function(socket) {
-  socket.on('new user',function(data, callback){
-	 if(data in users){
-		callback(false);
-	 } else{
-	 	callback(true);
-		socket.nickname = data;
-		users[socket.nickname] = socket;
-		updateNicknames();
-	 }
-	
-  });
+    socket.on('new user', function(data, callback) {
+        if (data in users) {
+            callback(false);
+        } else {
+            callback(true);
+            socket.nickname = data;
+            users[socket.nickname] = socket;
+            updateNicknames();
+        }
 
-  function updateNicknames(){
-  	io.sockets.emit("usernames", Object.keys(users));
-  }
+    });
 
-  socket.on("new message", function(data){
-    io.sockets.emit("new message", {msg: data, nick: socket.nickname});
-  });
+    function updateNicknames() {
+        io.sockets.emit("usernames", Object.keys(users));
+    }
 
-  socket.on("disconnect", function(data){
-  	if(!socket.nickname) return;
-  	delete users[socket.nickname];
-  	updateNicknames();
-  });
+    socket.on("new message", function(data) {
+        io.sockets.emit("new message", { msg: data, nick: socket.nickname });
+    });
+
+    socket.on("disconnect", function(data) {
+        if (!socket.nickname) return;
+        delete users[socket.nickname];
+        updateNicknames();
+    });
 });
 //CHAT module - addition
 
 //CHAT module changes
-var PORT = process.env.PORT ||  4000; //@Team to Review the PORT 4000 change, with Michael
+var PORT = process.env.PORT || 4000; //@Team to Review the PORT 4000 change, with Michael
 //CHAT module changes
 var mainRoutes = require('./routes/mainRoutes.js');
 
@@ -91,6 +91,9 @@ var authRoute = require('./routes/auth.js')(app, passport);
 //Chat Routes
 var chatRoutes = require('./routes/chatRoutes.js')(app, io);
 //CHAT module - addition
+
+// api route for matches
+var matchRoutes = require('./routes/matchRoutes.js')(app);
 
 // Load Passport strategies
 require('./models/user');
